@@ -57,30 +57,30 @@
 
 class soge (
   String                     $version             = '8.1.9',
-  Stdlib::Unixpath           $soge_root           = '/opt/soge',
+  Stdlib::Unixpath           $soge_root           = '/opt/sge',
   String                     $soge_cell           = 'default',
   String                     $soge_cluster_name   = 'condemor',
   Stdlib::Port::Unprivileged $soge_qmaster_port   = 6444,
   Stdlib::Port::Unprivileged $soge_execd_port     = 6445,
   Stdlib::Fqdn               $soge_qmaster_name   = 'gromenauer',
-  Boolean                    $manage_user         = 'sogeadmin',
-  String                     $soge_admin_user     = 398,
+  Boolean                    $manage_user         = true,
+  String                     $soge_admin_user     = 'sogeadmin',
   Integer                    $soge_admin_user_id  = 398,
   String                     $soge_admin_group    = 'sogeadmin',
-  Integer                    $soge_admin_group_id = '398',
+  Integer                    $soge_admin_group_id = 398,
   String                     $soge_arch           = 'lx-arch',
   Boolean                    $manage_service      = true,
   String                     $package_name        = gridengine,
   String                     $node_type           = undef,
-  Option[Hash]               $soge_request        = undef,
+  Optional[Hash]             $soge_request        = undef,
 ) {
 
-  contain 'soge::install'
-  contain 'soge::configure'
-  contain 'soge::service'
+  contain ::soge::install
+  contain ::soge::configure
+  contain ::soge::service
 
-  class { 'soge::install' : }
-  -> class { 'soge::configure' : }
-  ~> class { 'soge::service' : }
+  Class['::soge::install']
+  -> Class['::soge::configure']
+  ~> Class['::soge::service']
 
 }

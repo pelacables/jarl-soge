@@ -6,7 +6,10 @@
 # but it is not a valid yum repository
 #
 
-class soge::install {
+class soge::install (
+  $_package_name = $::soge::package_name,
+  $_version      = $::soge::version,
+) {
 
   if ($soge::manage_user) {
     include soge::user

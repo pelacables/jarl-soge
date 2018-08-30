@@ -73,11 +73,10 @@ PATH=/bin:/usr/bin:/sbin:/usr/sbin
 # chkconfig: 35 96 2
 #---------------------------------------------------------------------------
 
-SGE_CELL=<%= _soge_cell %>; export SGE_CELL
-SGE_CLUSTER_NAME=<%= _soge_cluster_name %>; export SGE_CLUSTER_NAME
-SGE_QMASTER_PORT=<%= _soge_qmaster_port %>; export SGE_QMASTER_PORT
-SGE_EXECD_PORT=<%= _soge_execd_port %>; export SGE_EXECD_PORT
-SGE_EXECD_PORT=6445; export SGE_EXECD_PORT
+SGE_CELL=<%= @_soge_cell %>; export SGE_CELL
+SGE_CLUSTER_NAME=<%= @_soge_cluster_name %>; export SGE_CLUSTER_NAME
+SGE_QMASTER_PORT=<%= @_soge_qmaster_port %>; export SGE_QMASTER_PORT
+SGE_EXECD_PORT=<%= @_soge_execd_port %>; export SGE_EXECD_PORT
 
 count=0
 while [ ! -d "$SGE_ROOT" -a $count -le 120 ]; do

@@ -10,9 +10,9 @@
 #  }
 #
 class soge::service (
-  $_manage_service    = ::soge::manage_service,
-  $_node_type         = ::soge::node_type,
-  $_soge_cluster_name = ::soge::soge_cluster_name,
+  $_manage_service    = $::soge::manage_service,
+  $_node_type         = $::soge::node_type,
+  $_soge_cluster_name = $::soge::soge_cluster_name,
 ) {
 
   if ("${_manage_service}" == true) and ("${_node_type}" == 'execution')  {
@@ -29,6 +29,6 @@ class soge::service (
     ensure    => $execd_ensure,
     enable    => $execd_enable,
     hasstatus => false,
+  }
 
-  notify {"module_name: ${module_name}":}
 }

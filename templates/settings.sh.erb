@@ -1,13 +1,13 @@
-SGE_ROOT=<%= _soge_root %>; export SGE_ROOT
+SGE_ROOT=<%= @_soge_root %>; export SGE_ROOT
 
 ARCH=`$SGE_ROOT/util/arch`
 DEFAULTMANPATH=`$SGE_ROOT/util/arch -m`
 MANTYPE=`$SGE_ROOT/util/arch -mt`
 
-SGE_CELL=<%= _soge_cell %>; export SGE_CELL
-SGE_CLUSTER_NAME=<%= _soge_cluster_name %>; export SGE_CLUSTER_NAME
-SGE_QMASTER_PORT=<%= _soge_qmaster_port %>; export SGE_QMASTER_PORT
-SGE_EXECD_PORT=<%= _soge_execd_port %>; export SGE_EXECD_PORT
+SGE_CELL=<%= @_soge_cell %>; export SGE_CELL
+SGE_CLUSTER_NAME=<%= @_soge_cluster_name %>; export SGE_CLUSTER_NAME
+SGE_QMASTER_PORT=<%= @_soge_qmaster_port %>; export SGE_QMASTER_PORT
+SGE_EXECD_PORT=<%= @_soge_execd_port %>; export SGE_EXECD_PORT
 
 if [ "$MANPATH" = "" ]; then
    MANPATH=$DEFAULTMANPATH
