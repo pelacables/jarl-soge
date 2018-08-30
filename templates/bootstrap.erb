@@ -1,0 +1,17 @@
+# Version: <%= _soge_version %>
+# #
+admin_user              <%= _soge_admin_user %>
+default_domain          none
+ignore_fqdn             true
+spooling_method         classic
+spooling_lib            libspoolc
+spooling_params         <%= _soge_path %>/common;<%= _soge_path %>/spool/qmaster
+binary_path             <%= _soge_root %>/bin
+qmaster_spool_dir       <%= _soge_root %>/<%= _soge_cell %>/spool/qmaster
+security_mode           none
+listener_threads        2
+worker_threads          4
+reader_threads          2
+scheduler_threads       1
+jvm_threads             0
+lo_threads              0
