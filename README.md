@@ -57,7 +57,7 @@ Or if you use hiera:
   - '-q short'
   - '-l h_vmem=4G,h_rt=6:00:00'
   - '-v _JAVA_OPTIONS=-Xmx3276M'
-
+```
 
 
 ## Reference
