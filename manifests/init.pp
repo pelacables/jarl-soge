@@ -72,7 +72,7 @@ class soge (
   Boolean                    $manage_service      = true,
   String                     $package_name        = gridengine,
   String                     $node_type           = undef,
-  Optional[Hash]             $soge_request        = undef,
+  Optional[Tuple]            $soge_request        = undef,
 ) {
 
   contain ::soge::install

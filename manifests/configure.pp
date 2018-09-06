@@ -36,7 +36,7 @@ class soge::configure (
   $_soge_path = "/${_soge_root}/${_soge_cell}"
 
   file {
-    "${_soge_path}/default/spool":
+    "${_soge_path}/spool":
       ensure  => directory,
       mode    => '0755',
       owner   => "${_soge_admin_user}",
