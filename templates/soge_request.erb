@@ -1,3 +1,5 @@
-<% @_soge_request.each do |val| -%>
+<% if @_soge_request %>
+  <% @_soge_request.each do |val| -%>
  <%= val %>
+  <% end -%>
 <% end -%>
