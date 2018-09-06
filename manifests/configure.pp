@@ -63,7 +63,7 @@ class soge::configure (
       ensure  => link,
       target  => "${_soge_path}/common/settings.sh",
       require => File["${_soge_path}/common/settings.sh"];
-    "${_soge_path}/common/soge_request" :
+    "${_soge_path}/common/sge_request" :
       ensure  => "${ensure_soge_request}",
       mode    => '0644',
       owner   => "${_soge_admin_user}",
