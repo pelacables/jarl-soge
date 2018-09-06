@@ -6,7 +6,6 @@
 1. [Setup - The basics of getting started with soge](#setup)
     * [What soge affects](#what-soge-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with soge](#beginning-with-soge)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 1. [Limitations - OS compatibility, etc.](#limitations)
@@ -14,76 +13,112 @@
 
 ## Description
 
-Start with a one- or two-sentence summary of what the module does and/or what
-problem it solves. This is your 30-second elevator pitch for your module.
-Consider including OS/Puppet version it works with.
+Puppet module that installs and configures SoGE in a submit or execution host.
+(It can probably install any *GE).
+Tested in SL7 and Puppet 5.
 
-You can give more descriptive information in a second paragraph. This paragraph
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?" If your module has a range of functionality (installation, configuration,
-management, etc.), this is the time to mention it.
+*I did not want to update the UGE module cause I don't have any UGE instance right now and I could not test it.
 
 ## Setup
 
-### What soge affects **OPTIONAL**
+### What soge affects 
 
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
+The module installs SoGE package from **your local repository**.
+It accepts two different nodes: execution/submit.
+It can also configures soge_execd service (only in a execution host), adds
+sgeadmin user and sge_request (if defined) in the submission host.
 
-If there's more that they should know about, though, this is the place to mention:
+### Setup Requirements 
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section
-here.
-
-### Beginning with soge
-
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most
-basic use of the module.
+The gridengine rpm packages have to be available in the system (already installed or available in a yum repository).
+*you can use https://arc.liv.ac.uk/downloads/SGE/releases/8.1.9/*
+*but it is not a valid yum repository*
 
 ## Usage
 
-This section is where you describe how to customize, configure, and do the
-fancy stuff with your module here. It's especially helpful if you include usage
-examples and code samples for doing things with your module.
+```puppet
+class { 'soge' :
+  manage_user    => true,
+  manage_service => true,
+}
+```
+
+Or if you use hiera:
+
+```puppet
+ classes:
+   - '::soge'
+ soge::soge_cell: 'jarl'
+ soge::soge_cluster_name: 'condemor'
+ soge::soge_qmaster_port: '7454'
+ soge::manage_user: true
+ soge::sge_request:
+  - '-w w'
+  - '-q short'
+  - '-l h_vmem=4G,h_rt=6:00:00'
+  - '-v _JAVA_OPTIONS=-Xmx3276M'
+```
+
 
 ## Reference
 
-Users need a complete list of your module's classes, types, defined types providers, facts, and functions, along with the parameters for each. You can provide this list either via Puppet Strings code comments or as a complete list in this Reference section.
+### Classes
 
-* If you are using Puppet Strings code comments, this Reference section should include Strings information so that your users know how to access your documentation.
+#### Public Classes
 
-* If you are not using Puppet Strings, include a list of all of your classes, defined types, and so on, along with their parameters. Each element in this listing should include:
+* soge: Main class, includes all other classes.
 
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
+#### Private Classes
+
+* soge::install: Installs SoGE from RPMS.
+* soge::configure: Modifies/creates all configuration files + service file.
+* soge::service: Handles the service.
+* soge::user: Handles the user creation.
+
+### Parameters
+
+The following parameters are available in the soge module:
+
+* **version**
+   SoGE version.
+* **package_name**
+   Name of the rpm package that you want to install. (default to gridengine)
+* **soge_root**
+   Base directory of the Son of Grid Engine installation. (default to /opt/soge)
+* **soge_cell**
+   Name of the Son of Grid Engine cell to be installed. (Default to default)
+* **soge_cluster_name**
+   Name of the Son of Grid Engine cluster to be installed. (Default to cluster1)
+* **soge_qmaster_port**
+   Port number for the soge_qmaster daemon. (default to 6444)
+* **soge_execd_port**
+   Port number for the soge_execd daemon. (default to 6445)
+* **soge_qmaster_name**
+   FQDN of the node running as master host. (default to masterhost)
+* **manage_user**
+   Attemp to create soge admin user. (default to true)
+* **soge_admin_user**
+   Username for the soge admin user. (default to sogeadmin)
+* **soge_admin_user_id**
+   uid for the username of the soge admin user. (default to 398)
+* **soge_admin_group**
+   Groupname for the soge admin user. (default to sogeadmin)
+* **soge_admin_group_id**
+   gid for the groupname of the soge admin user. (default to 399)
+* **soge_arch**
+   arch for the binaries of the soge. (default to lx-amd64)
+* **manage_service**
+   Attempt to install sogeexecd as system service. (default to true)
+* **soge_request**
+   Array of parameters for creating a system soge_request. (default to undef)
+* **soge_node_type**
+   soge node type of the target node. (default to execution. Only submit/execution supported).
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc. If there
-are Known Issues, you might want to include them under their own heading here.
+Tested in SL74 and pupppet 5.5.
+It should work in any SL7* and, most probably work with all OGS/SoGE/UGE.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel
-are necessary or important to include here. Please use the `## ` header.
+happy to add any improvement to the module. Open an issue or a PR :-)
