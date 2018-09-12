@@ -15,6 +15,7 @@ class soge::configure (
   $_soge_cluster_name = $::soge::soge_cluster_name,
   $_soge_version      = $::soge::version,
   $_soge_execd_port   = $::soge::soge_execd_port,
+  $_soge_qmaster_port = $::soge::soge_qmaster_port,
   $_soge_service_name = $::soge::soge_service_name,
   ) {
 
@@ -54,6 +55,12 @@ class soge::configure (
       owner   => "${_soge_admin_user}",
       group   => "${_soge_admin_group}",
       content => template('soge/bootstrap.erb');
+    "${_soge_path}/common/cluster_name" :
+      ensure  => present,
+      mode    => '0644',
+      owner   => "${_soge_admin_user}",
+      group   => "${_soge_admin_group}",
+      content => "${_soge_cluster_name}";
     "${_soge_path}/common/settings.sh" :
       ensure  => present,
       mode    => '0644',
@@ -70,12 +77,6 @@ class soge::configure (
       owner   => "${_soge_admin_user}",
       group   => "${_soge_admin_group}",
       content => template('soge/soge_request.erb');
-    "/etc/init.d/${_soge_service_name}":
-      ensure  => present,
-      mode    => '0755',
-      owner   => 'root',
-      group   => 'root',
-      source  => 'puppet:///modules/soge/soge.service';
   }
 
 }

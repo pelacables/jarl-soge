@@ -1,0 +1,11 @@
+[Unit]
+Description=SoGE execd daemon
+After=syslog.target
+
+[Service]
+ExecStart=/opt/sge/bin/lx-amd64/sge_execd
+EnvironmentFile=/etc/sysconfig/sgeexecd
+Type=forking
+
+[Install]
+WantedBy=multi-user.target

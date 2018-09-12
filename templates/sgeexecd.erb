@@ -1,0 +1,10 @@
+SGE_ROOT=<%= @_soge_root %>
+ARCH=`$SGE_ROOT/util/arch`
+DEFAULTMANPATH=`$SGE_ROOT/util/arch -m`
+MANTYPE=`$SGE_ROOT/util/arch -mt`
+SGE_CELL=<%= @_soge_cell %>
+SGE_CLUSTER_NAME=<%= @_soge_cluster_name %>
+SGE_QMASTER_PORT=<%= @_soge_qmaster_port %>
+SGE_EXECD_PORT=<%= @_soge_execd_port %>
+MANPATH=$SGE_ROOT/$MANTYPE:$MANPATH
+PATH=$SGE_ROOT/bin/$ARCH:$PATH
