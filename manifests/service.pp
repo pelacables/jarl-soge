@@ -13,6 +13,7 @@ class soge::service (
   $_manage_service    = $::soge::manage_service,
   $_node_type         = $::soge::node_type,
   $_soge_cluster_name = $::soge::soge_cluster_name,
+  $_soge_service_name = $::soge::soge_service_name,
 ) {
 
   if ("${_manage_service}" == true) and ("${_node_type}" == 'execution')  {
@@ -25,7 +26,7 @@ class soge::service (
   }
 
 
-  service { "sge.${_soge_cluster_name}":
+  service { "${_soge_service_name}":
     ensure    => $execd_ensure,
     enable    => $execd_enable,
     hasstatus => false,
