@@ -16,7 +16,7 @@ class soge::service (
   $_soge_service_name = $::soge::soge_service_name,
 ) {
 
-  if ("${_manage_service}" == true) and ("${_node_type}" == 'execution')  {
+  if ($_manage_service == true) and ("${_node_type}" == 'execution')  {
     $execd_ensure = 'running'
     $execd_enable = true
   }
