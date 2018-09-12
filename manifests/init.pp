@@ -69,6 +69,7 @@ class soge (
   String                     $soge_admin_group    = 'sogeadmin',
   Integer                    $soge_admin_group_id = 398,
   String                     $soge_arch           = 'lx-arch',
+  String                     $soge_service_name   = 'sge',
   Boolean                    $manage_service      = true,
   String                     $package_name        = gridengine,
   String                     $node_type           = undef,

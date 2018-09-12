@@ -15,6 +15,7 @@ class soge::configure (
   $_soge_cluster_name = $::soge::soge_cluster_name,
   $_soge_version      = $::soge::version,
   $_soge_execd_port   = $::soge::soge_execd_port,
+  $_soge_service_name = $::soge::soge_service_name,
   ) {
 
   if ($_soge_request != undef) and ($_node_type == 'submit')  {
@@ -37,10 +38,10 @@ class soge::configure (
 
   file {
     "${_soge_path}/spool":
-      ensure  => directory,
-      mode    => '0755',
-      owner   => "${_soge_admin_user}",
-      group   => "${_soge_admin_group}";
+      ensure => directory,
+      mode   => '0755',
+      owner  => "${_soge_admin_user}",
+      group  => "${_soge_admin_group}";
     "${_soge_path}/common/act_qmaster" :
       ensure  => present,
       mode    => '0644',
@@ -69,7 +70,7 @@ class soge::configure (
       owner   => "${_soge_admin_user}",
       group   => "${_soge_admin_group}",
       content => template('soge/soge_request.erb');
-    "/etc/init.d/sge.${_soge_cluster_name}":
+    "/etc/init.d/${_soge_service_name}":
       ensure  => present,
       mode    => '0755',
       owner   => 'root',
