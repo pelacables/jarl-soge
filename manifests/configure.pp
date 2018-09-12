@@ -75,7 +75,7 @@ class soge::configure (
       mode    => '0755',
       owner   => 'root',
       group   => 'root',
-      content => template('soge/soge.service.erb');
+      source  => 'puppet:///modules/soge/soge.service';
   }
 
 }
